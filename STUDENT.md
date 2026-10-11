@@ -6,13 +6,13 @@ Fill in every field below before your first commit. This file is how instructors
 
 | Field | Your Answer |
 |-------|-------------|
-| Full Name | |
-| GitHub Username | |
-| Email Address | |
-| Phone / WhatsApp | |
+| Full Name | Enyichukwu Samuel |
+| GitHub Username | Samuel252006 |
+| Email Address |samuelenyichukwu98@gmail.com |
+| Phone / WhatsApp | 09134098655 |
 | Cohort | Havilah Club Internship — Cohort |
-| Programme Start Date | |
-| LinkedIn Profile | |
+| Programme Start Date | 7th September 2026 |
+| LinkedIn Profile | https://www.linkedin.com/in/samuel-enyichukwu-255196382 |
 
 ---
 
@@ -20,8 +20,7 @@ Fill in every field below before your first commit. This file is how instructors
 
 Write 2–3 sentences describing what you specifically want to be able to do by the end of the 8 weeks.
 
-> Replace this line with your learning objective.
-
+> By the end of the 8 weeks, I want to be able to build AI automation workflows using tools like n8n and Python, and understand how to connect AI with real-world tasks. I also want to gain practical skills in robotics, including working with Arduino, sensors, and motors, so I can apply what I learn to automotive mechatronics and the development of smarter vehicles.
 ---
 
 ## How to update this file
