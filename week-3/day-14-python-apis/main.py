@@ -1,41 +1,92 @@
+
 # Day 14 — Python and APIs
-# Task: Build a Python program that retrieves information from an API
-# and processes the JSON response to produce a useful output.
-# Submit this script + a screenshot of the printed output.
+# Havilah Club Internship
+# Student: Enyichukwu Samuel
+# Project: Book Search Utility
 
 import requests
-import os
 
-# Load your API key from the environment (never hardcode it here).
-# Copy .env.example to .env and fill in your key before running.
-API_KEY = os.getenv("API_KEY", "")
-BASE_URL = ""  # TODO: set your chosen API's base URL
+BASE_URL = "https://openlibrary.org/search.json"
 
 
-# ── Step 1: Fetch Data ────────────────────────────────────────────────────────
-# Make a GET request to the API and return the parsed JSON response.
-# Handle network errors and non-200 status codes gracefully.
+# Step 1: Fetch Data
 
 def fetch_data(query):
-    # TODO: build params dict and call requests.get()
-    # TODO: check response.status_code before calling .json()
-    pass
+    params = {
+        "q": query,
+        "limit": 3,
+        "fields": "title,author_name,first_publish_year,edition_count"
+    }
+
+    try:
+        response = requests.get(
+            BASE_URL,
+            params=params,
+            timeout=15
+        )
+
+        print("\nHTTP Status Code:", response.status_code)
+        print("Request URL:", response.url)
+
+        if response.status_code == 200:
+            data = response.json()
+
+            # Inspect the JSON response
+            print("\n--- RAW JSON RESPONSE ---")
+            print(data)
+
+            return data
+        else:
+            print("API request was unsuccessful.")
+            return None
+
+    except requests.exceptions.RequestException as error:
+        print("Network error:", error)
+        return None
+
+    except ValueError:
+        print("Error: The response is not valid JSON.")
+        return None
 
 
-# ── Step 2: Parse and Display ─────────────────────────────────────────────────
-# Extract at least 3 useful pieces of information from the response.
-# Print them in a clear, labelled format — not raw JSON.
+# Step 2: Parse and Display Results
 
 def display_results(data):
-    # TODO: navigate the JSON structure and print each field with a label
-    pass
+    books = data.get("docs", [])
+
+    if len(books) == 0:
+        print("No books found.")
+        return
+
+    print("\n========== BOOK SEARCH RESULTS ==========")
+
+    for book in books:
+        title = book.get("title", "Unknown Title")
+        authors = book.get("author_name", ["Unknown Author"])
+        year = book.get("first_publish_year", "Unknown")
+        editions = book.get("edition_count", 0)
+
+        print("\nBook Title:", title)
+        print("Author:", ", ".join(authors))
+        print("First Published:", year)
+        print("Number of Editions:", editions)
+        print("----------------------------------------")
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# Main Program
+
 def main():
-    query = input("Enter your search query: ")
+    print("WELCOME TO THE BOOK SEARCH UTILITY")
+
+    query = input("Enter a book title or topic: ").strip()
+
+    if query == "":
+        print("Please enter a search term.")
+        return
+
     data = fetch_data(query)
-    if data:
+
+    if data is not None:
         display_results(data)
 
 
