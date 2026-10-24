@@ -1,168 +1,329 @@
 # Day 15 — Python Automation Project
 
 **Student:** Enyichukwu Samuel
+
+**GitHub Username:** Samuel252006
+
 **Project:** Student Performance Report Generator
 
-## What Does This Project Do?
+**Project Type:** Option B — Report Generator
 
-This Python program automatically reads student records from a CSV file, calculates basic performance statistics, and generates a formatted text report.
+**Programme:** Havilah Club Internship — Week 3
 
-It helps organise student performance information without manually calculating each statistic.
+## 1. Project Description
 
-## Project Type
+This project is a Python automation tool that reads student records from a CSV file, calculates basic performance statistics, and automatically generates a formatted text report.
 
-**Option B — Report Generator**
+It reduces the need for manually calculating student statistics and demonstrates how Python can automate repetitive data-processing tasks.
 
-## Automation Plan
+## 2. Automation Plan
 
-**Input:** A CSV file containing at least eight student records with `name` and `score` columns.
+The automation follows the structure:
 
-**Process:**
+**Input → Process → Output → Edge Cases**
+
+### Input
+
+A CSV file named `data/scores.csv` containing 10 student records with the following columns:
+
+- `name` — Student's name
+- `score` — Student's numerical score
+- `subject` — Subject associated with the record
+- `department` — Student's department
+- `course_code` — Course identification code
+
+The program uses the `name` and `score` fields for processing. The other columns provide additional information.
+
+### Process
 
 1. Read the CSV file using `csv.DictReader`.
-2. Convert student scores to numerical values.
-3. Calculate the number of students, average score, highest score and lowest score.
-4. Prepare a formatted report.
+2. Check that the required columns exist.
+3. Convert student scores into numerical values.
+4. Calculate the total number of students.
+5. Calculate the average, highest, and lowest scores.
+6. Format the statistics into a readable report.
 
-**Output:** A text file saved as `data/output/report.txt`.
+### Output
 
-**Edge Cases:**
+A text report saved automatically to:
+
+`data/output/report.txt`
+
+### Edge Cases
+
+The program handles several situations that may prevent successful processing:
 
 - Missing input CSV file.
-- Empty CSV file or no student records.
-- Missing required columns or invalid numerical values.
-- Failure to save the output file.
+- Empty CSV file or no usable student records.
+- Missing required CSV columns.
+- Blank student names or invalid numerical scores.
+- Errors while creating or writing the output file.
 
-## Requirements
+## 3. Requirements
 
 - Python 3
-- Python's built-in `csv` and `os` modules
+- Python's built-in `csv` module
+- Python's built-in `os` module
 
 No additional libraries or `pip install` commands are required.
 
-## How to Run
+## 4. Project Structure
 
+```text
+day-15-automation-project/
+├── main.py
+├── README.md
+├── test_submission.py
+└── data/
+    ├── scores.csv
+    └── output/
+        └── report.txt
+```
 
+**File descriptions:**
 
-Open the Day 15 project folder and run:
+- `main.py` — Contains the Python automation program.
+- `README.md` — Provides instructions, project information and test documentation.
+- `test_submission.py` — Original instructor-provided submission checks, not modified.
+- `data/scores.csv` — Contains the input dataset.
+- `data/output/report.txt` — Contains the generated performance report.
+
+The original `data/.gitkeep` file is also retained in the repository.
+
+## 5. How to Run
+
+The project was developed and manually tested using GitHub Codespaces.
+
+### Method 1 — From the Day 15 Folder
+
+Open a terminal in the Day 15 project folder and run:
 
 ```bash
 python main.py
 ```
 
-The program automatically reads `data/scores.csv` and generates the report.
+### Method 2 — From the Repository Root
 
-## Expected Output
+Run:
+
+```bash
+python week-3/day-15-automation-project/main.py
+```
+
+Both methods work because the program constructs file paths relative to the location of `main.py`.
+
+The input data is read automatically, and the generated report is saved in the output folder.
+
+## 6. Functions Used
+
+The automation uses five clearly named functions.
+
+| Function | Purpose |
+|---|---|
+| `load_data(filepath)` | Reads and validates student records from the CSV file |
+| `generate_report(students)` | Calculates statistics and formats the report |
+| `save_report(report, output_path)` | Creates the output directory and writes the report |
+| `process(input_path, output_path)` | Coordinates loading, processing and saving |
+| `main()` | Starts the automation and displays its completion status |
+
+The program applies functions, loops, conditional statements, lists, dictionaries and `try/except` error handling.
+
+## 7. Example Output
+
+The program successfully processed all 10 student records and generated the following report:
 
 ```text
 ===== STUDENT PERFORMANCE REPORT =====
 Total Students: 10
-Average Score: 77.40  
+Average Score: 77.40
 Highest Score: 94.0
 Lowest Score: 55.0
 ======================================
 ```
 
-The results are saved in `data/output/report.txt`.
+The output was saved to `data/output/report.txt`.
 
-## Error Handling
+The generated file was opened and checked to confirm that its contents matched the report displayed in the terminal.
 
-The program checks whether the input CSV exists and contains usable records. It also handles missing required columns, invalid scores, and file-writing errors.
+## 8. Testing, Errors Encountered and Solutions
 
-If the input is unavailable or invalid, the program displays an error message instead of generating a misleading report.
+The project was manually tested in GitHub Codespaces using normal input and deliberately introduced error scenarios.
 
-## Testing
+### Test 1 — Initial Input File Not Found
 
-The program will be tested using normal input and deliberate edge cases. Actual testing results will be documented after execution.
+**Problem:** During the first execution, the program displayed:
 
-## Conclusion
+```text
+Error: Input CSV file was not found.
+No valid student records available.
+Automation could not be completed.
+```
 
-This project demonstrates how Python can automate a sequence of tasks, from reading input data to processing it and generating a useful output.
+**Cause:** The required `data/scores.csv` file had not yet been created at the expected location.
 
-It applies concepts from the previous Python classes, including functions, CSV processing, conditions, file handling and basic error handling.\*
+**Solution:** Created the CSV file using a custom dataset containing 10 student records.
 
-### Issue — Input File Not Found When Running From Another Directory
+**Result:** The program successfully located and processed the dataset.
 
-**Problem:** The program successfully generated the student report when executed from the Day 15 folder but displayed `Error: Input CSV file was not found` when executed from the repository root.
+**Status:** Resolved.
 
-**Cause:** The input and output paths were relative to the terminal's current working directory.
+### Test 2 — Running the Program From Different Directories
 
-**Solution:** Used Python's built-in `os.path.abspath()`, `os.path.dirname()`, and `os.path.join()` to construct paths relative to the location of `main.py`.
+**Problem:** The program ran correctly from the Day 15 folder but initially failed when executed from the repository root.
 
-**Lesson learned:** File paths must be handled carefully because a Python script may be executed from different working directories.
-## Testing, Errors Encountered and Solutions
+**Cause:** The original input and output paths were relative to the terminal's current working directory.
 
-The automation was tested in GitHub Codespaces using a custom CSV containing 10 student records with the columns `name`, `score`, `subject`, `department`, and `course_code`.
+**Solution:** Updated the path configuration using Python's built-in functions:
 
-### Successful Execution
+```python
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-The program successfully processed all 10 records and generated a text report containing:
+INPUT_PATH = os.path.join(BASE_DIR, "data", "scores.csv")
+OUTPUT_PATH = os.path.join(BASE_DIR, "data", "output")
+```
+
+These functions locate the input and output files relative to the Python script.
+
+**Result:** The program successfully generated identical reports when executed from both the repository root and the Day 15 folder.
+
+**Status:** Passed.
+
+### Test 3 — Normal CSV Processing
+
+**Input:** The complete `scores.csv` containing 10 student records.
+
+**Result:** The automation calculated:
 
 - Total students: 10
 - Average score: 77.40
-- Highest score: 94
-- Lowest score: 55
+- Highest score: 94.0
+- Lowest score: 55.0
 
-The generated report was verified by opening `data/output/report.txt`.
+It successfully created the output text file and displayed `Done.`
 
-### Issue 1 — Input File Not Found
+**Status:** Passed.
 
-**Problem:** The program initially displayed `Error: Input CSV file was not found`.
+### Test 4 — Missing Input File
 
-**Cause:** The input file was initially missing. Later, the program also failed when executed from the repository root because it used relative paths.
+**Test:** Attempted to process a nonexistent file named `data/missing.csv`.
 
-**Solution:** Created the required `data/scores.csv` file and updated the program to build file paths relative to the location of `main.py` using Python's `os.path` functions.
+**Result:**
 
-**Result:** The program subsequently ran successfully from both the repository root and Day 15 directory.
+```text
+Error: Input CSV file was not found.
+No valid student records available.
+```
 
-### Issue 2 — Missing Input File
+The program stopped without generating a new report.
 
-**Test:** Used a filename that did not exist: `data/missing.csv`.
+**Lesson learned:** `FileNotFoundError` can be handled using `try/except` to prevent an unhandled crash when an input file is unavailable.
 
-**Result:** The program displayed the appropriate file-not-found message and stopped without generating a new report.
+**Status:** Passed.
 
-### Issue 3 — Invalid Student Score
+### Test 5 — Invalid Student Score
 
-**Test:** Created a temporary CSV containing a score written as `invalid`.
+**Test:** Created a temporary CSV file containing an invalid numerical value.
 
-**Result:** The program displayed `Error: Invalid or missing score in the CSV file` and stopped without generating a new report.
+```csv
+name,score
+Amaka,78
+Tunde,invalid
+```
 
-**Lesson:** Numerical values must be converted carefully, and invalid values should be handled using `try/except`.
+**Result:**
 
-### Final Verification
+```text
+Error: Invalid or missing score in the CSV file.
+No valid student records available.
+```
 
-After the error-handling tests, the original program was executed again using the correct dataset.
+The program stopped without generating a new report.
 
-It successfully generated the same report, confirming that the temporary tests had not affected the original input data.
+**Lesson learned:** Numerical values should be validated before calculations. Conversion errors can be handled using `ValueError`.
 
-### What I Learned
+The temporary test file was deleted afterward.
 
-This project helped me understand how to automate a complete data-processing workflow, organise tasks into functions, handle file paths correctly, process CSV records, calculate statistics and save useful reports.
+**Status:** Passed.
 
-It also demonstrated why testing both normal conditions and error scenarios is important.
-### Issue 4 — Empty CSV File
+### Test 6 — Empty CSV File
 
-**Test:** Created a temporary empty CSV file named `test_empty.csv` and attempted to process it.
+**Test:** Created an empty temporary CSV file named `test_empty.csv`.
 
-**Result:** The program displayed:
+**Result:**
 
 ```text
 Error: The CSV file is empty.
 No valid student records available.
 ```
 
-The automation stopped without generating a new report.
+The program stopped without generating a new report.
 
-**Lesson learned:** A program should check whether the input contains usable records before performing calculations. This prevents errors such as dividing by zero.
+**Lesson learned:** Checking for available records prevents invalid calculations, such as division by zero.
 
 The temporary test file was deleted afterward.
 
-### Issue 5 — Generated Report Ignored by Git
+**Status:** Passed.
 
-**Problem:** The generated `report.txt` file existed but did not appear in `git status` as an untracked file.
+### Test 7 — Final Normal Execution
 
-**Cause:** The repository's `.gitignore` contained the rule `output/`, which excluded the report's directory.
+After the error-handling tests, the original program was executed again using the complete dataset.
 
-**Solution:** The required report can be explicitly staged using `git add -f` without changing the repository's `.gitignore`.
+**Result:** The program successfully processed all 10 student records and generated the same report with the expected statistics.
 
-**Lesson learned:** Git may ignore generated files by default, but specific files required for an assignment can be explicitly included in a commit.
+This confirmed that the temporary testing activities did not affect the original dataset.
+
+**Status:** Passed.
+
+## 9. GitHub Troubleshooting
+
+### Generated Report Ignored by Git
+
+**Problem:** The generated `report.txt` existed in the project folder but did not appear as an untracked file when running `git status`.
+
+**Investigation:**
+
+```bash
+git check-ignore -v data/output/report.txt
+git ls-files data/output/report.txt
+```
+
+**Cause:** The repository's `.gitignore` contained the rule `output/`, which excluded the generated report folder.
+
+**Solution:** Explicitly staged the required report using:
+
+```bash
+git add -f data/output/report.txt
+```
+
+This allowed the file to be included in the commit without changing the repository's existing `.gitignore` rules.
+
+**Result:** The generated report was successfully committed and pushed to GitHub.
+
+**Lesson learned:** Git may ignore generated files by default, but a specific file required for submission can be force-added without removing the ignore rule.
+
+## 10. Key Lessons Learned
+
+Through this project, I practised:
+
+1. Planning an automation using Input → Process → Output.
+2. Reading structured CSV data using Python.
+3. Converting text-based numbers into numerical values.
+4. Calculating statistics using `len()`, `sum()`, `max()` and `min()`.
+5. Organising Python code into reusable functions.
+6. Creating folders and writing text files.
+7. Handling missing files, invalid values and empty datasets.
+8. Building reliable file paths using the `os.path` functions.
+9. Testing both normal execution and deliberate error scenarios.
+10. Investigating Git ignore rules and staging required output files.
+
+## 11. Conclusion
+
+Day 15 helped me combine several Python concepts into a complete automation project.
+
+I successfully developed a Student Performance Report Generator that reads CSV data, calculates important statistics and saves a formatted report automatically.
+
+The program was manually tested under normal conditions and multiple error scenarios. Problems involving input files, file paths, invalid values and Git staging were identified and resolved.
+
+The completed project was documented, committed and successfully pushed to my GitHub fork.
+
+This exercise strengthened my understanding of Python automation, data processing, file handling, debugging and version control.
