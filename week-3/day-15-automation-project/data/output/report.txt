@@ -1,0 +1,6 @@
+===== STUDENT PERFORMANCE REPORT =====
+Total Students: 10
+Average Score: 77.40
+Highest Score: 94.0
+Lowest Score: 55.0
+======================================
